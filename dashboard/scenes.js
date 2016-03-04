@@ -151,6 +151,8 @@ var sceneTeamReplicant = nodecg.Replicant("team-data")
         });
     });
 
+var currentGame = nodecg.Replicant("current-game");
+
 /** TYPEAHEAD **/
 $(document).ready(function() {
     $.ajaxSetup({
@@ -386,6 +388,7 @@ var sceneTeamUpdate = function(game) {
             "next_game": $("#scenes-coming-up-next-game").val(),
             "timer": $("#scenes-coming-up-timer").val()
         };
+		currentGame.value = sceneTeamReplicant.value[comingUpReplicant.value["next_game"]];
     }
     $(".scenes-coming-up-on-change").parent().removeClass("has-warning"); // Remove the warning on the input.
 };

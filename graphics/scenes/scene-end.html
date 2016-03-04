@@ -1,0 +1,50 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<dom-module id="scene-end">
+	<style>
+		#background-img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 1920px;
+			height: 1080px;
+
+			z-index: -10;
+		}
+
+		#foreground-img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 1920px;
+			height: 1080px;
+
+			background-image: url("../images/end/foreground.png");
+
+			z-index: 10;
+		}
+	</style>
+	<template>
+		<div id="background-img"></div>
+		<div id="foreground-img"></div>
+	</template>
+
+</dom-module>
+
+<script>
+	Polymer({
+		is: "scene-end",
+
+		ready: function () {
+			var currentBG = "";
+			var comingUpReplicant = nodecg.Replicant("coming-up")
+					.on("change", function(oldVal, newVal) { // On change...
+						var colour = (newVal["colour"] == "inhouse") ? "black" : newVal["colour"];
+						if (currentBG != colour) {
+							$("#background-img").css("background-image", "url(" + preload.getResult(colour + "-bg").src + ")");
+							currentBG = newVal["colour"];
+						}
+					});
+		}
+	});
+</script>

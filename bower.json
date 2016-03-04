@@ -10,6 +10,7 @@
     "lodash": "~2.4.1",
     "nodecg-toast": "nodecgelements/nodecg-toast#^0.1.2",
     "typeahead.js": "~0.11.1",
-    "typeahead.js-bootstrap3.less": "typeahead.js-bootstrap-css#~1.2.1"
+    "typeahead.js-bootstrap3.less": "typeahead.js-bootstrap-css#~1.2.1",
+    "jquery": "^2.2.1"
   }
 }

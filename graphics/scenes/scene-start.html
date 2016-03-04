@@ -1,0 +1,40 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<dom-module id="scene-start">
+	<style>
+		#start-background-img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 1920px;
+			height: 1080px;
+
+			z-index: -10;
+		}
+
+		#start-foreground-img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 1920px;
+			height: 1080px;
+
+			background-image: url("../images/start/foreground.png");
+
+			z-index: 10;
+		}
+	</style>
+	<template>
+		<div id="start-background-img"></div>
+		<div id="start-foreground-img"></div>
+	</template>
+
+</dom-module>
+
+<script>
+	Polymer({
+		is: "scene-start"
+
+
+	});
+</script>

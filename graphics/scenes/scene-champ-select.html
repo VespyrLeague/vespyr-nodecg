@@ -1,0 +1,768 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<dom-module id="scene-champ-select">
+	<style>
+		#background {
+			position: absolute;
+			width: 1920px;
+			height: 1080px;
+
+			background-image: url("../images/champ-select/background.png");
+		}
+		#foreground {
+			position: absolute;
+			width: 1920px;
+			height: 1080px;
+
+			background-image: url("../images/champ-select/foreground.png");
+		}
+
+		#blue, #red {
+			position: absolute;
+
+			font-family: spiegelcdotregular, sans-serif;
+			color: #F8FCFD;
+		}
+
+		/*** BLUE TEAM ***/
+
+		#blue-team-info {
+			position: absolute;
+			width: 881px;
+			height: 154px;
+			margin-top: 11px;
+		}
+
+		#blue-team-info > div {
+			position: absolute;
+		}
+
+		#blue-team-score {
+			margin-top: 22px;
+			margin-left: 9px;
+			width: 130px;
+
+			font-family: spiegelcdotsemibold, sans-serif;
+			font-size: 120px;
+			text-align: center;
+		}
+
+		#blue-team-name {
+			margin-top: 23px;
+			margin-left: 139px;
+			font-size: 80px;
+		}
+
+		#blue-team-form {
+			margin-top: 106px;
+			margin-left: 139px;
+			font-size: 32px;
+		}
+
+		#blue-team-roster {
+			position: absolute;
+			width: 271px;
+			height: 600px;
+			margin-top: 270px;
+			margin-left: 12px;
+
+			font-size: 30px;
+		}
+
+		#blue-team-roster > div {
+			position: absolute;
+		}
+
+		#blue-team-top {
+			top: 0px;
+		}
+
+		#blue-team-jungle {
+			top: 140px;
+		}
+
+		#blue-team-mid {
+			top: 280px;
+		}
+
+		#blue-team-adc {
+			top: 420px;
+		}
+
+		#blue-team-support {
+			top: 560px;
+		}
+
+		#blue-team-bans {
+			position: absolute;
+			width: 356px;
+			height: 32px;
+			margin-top: 1048px;
+			margin-left: 8px;
+
+			font-size: 20px;
+			text-align: center;
+		}
+
+		#blue-team-bans > div {
+			position: absolute;
+			width: 116px;
+		}
+
+		#blue-team-ban1 {
+			top: 3px;
+			left: 0px;
+		}
+
+		#blue-team-ban2 {
+			top: 3px;
+			left: 121px;
+		}
+
+		#blue-team-ban3 {
+			top: 3px;
+			left: 242px;
+		}
+
+		#blue-team-champs-bg {
+			position: absolute;
+			width: 356px;
+			height: 687px;
+			margin-top: 175px;
+			margin-left: 8px;
+
+			z-index: -2;
+		}
+
+		#blue-team-champs-bg > div {
+			position: absolute;
+			width: 356px;
+			height: 131px;
+			margin-bottom: 10px;
+
+			z-index: -2;
+		}
+
+		#blue-team-top-bg {
+			top: 0px;
+		}
+
+		#blue-team-jungle-bg {
+			top: 139px;
+		}
+
+		#blue-team-mid-bg {
+			top: 278px;
+		}
+
+		#blue-team-adc-bg {
+			top: 417px;
+		}
+
+		#blue-team-support-bg {
+			top: 556px;
+		}
+
+		#blue-team-bans-bg {
+			position: absolute;
+			width: 356px;
+			height: 168px;
+			margin-top: 912px;
+			margin-left: 8px;
+
+			z-index: -2;
+		}
+
+		#blue-team-bans-bg > div {
+			position: absolute;
+			width: 116px;
+			height: 168px;
+
+			z-index: -2;
+		}
+
+		#blue-team-ban1-bg {
+			left: 0px;
+		}
+
+		#blue-team-ban2-bg {
+			left: 120px;
+		}
+
+		#blue-team-ban3-bg {
+			left: 240px;
+		}
+
+		/*** RED TEAM ***/
+
+		#red-team-info {
+			position: absolute;
+			width: 797px;
+			height: 154px;
+			margin-top: 11px;
+			margin-left: 1123px;
+
+			text-align: right;
+		}
+
+		#red-team-info > div {
+			position: absolute;
+		}
+
+		#red-team-score {
+			margin-top: 22px;
+			right: 0px;
+			width: 130px;
+
+			font-family: spiegelcdotsemibold, sans-serif;
+			font-size: 120px;
+			text-align: center;
+		}
+
+		#red-team-name {
+			margin-top: 23px;
+			width: 667px;
+			font-size: 80px;
+		}
+
+		#red-team-form {
+			margin-top: 106px;
+			width: 667px;
+			font-size: 32px;
+		}
+
+		#red-team-roster {
+			position: absolute;
+			width: 271px;
+			height: 600px;
+			margin-top: 270px;
+			margin-left: 1637px;
+
+			font-size: 30px;
+			text-align: right;
+		}
+
+		#red-team-roster > div {
+			position: absolute;
+			width: 268px;
+		}
+
+		#red-team-top {
+			top: 0px;
+		}
+
+		#red-team-jungle {
+			top: 140px;
+		}
+
+		#red-team-mid {
+			top: 280px;
+		}
+
+		#red-team-adc {
+			top: 420px;
+		}
+
+		#red-team-support {
+			top: 560px;
+		}
+
+		#red-team-bans {
+			position: absolute;
+			width: 356px;
+			height: 32px;
+			margin-top: 1048px;
+			margin-left: 1554px;
+
+			font-size: 20px;
+			text-align: center;
+		}
+
+		#red-team-bans > div {
+			position: absolute;
+			width: 116px;
+		}
+
+		#red-team-ban1 {
+			top: 3px;
+			left: 0px;
+		}
+
+		#red-team-ban2 {
+			top: 3px;
+			left: 121px;
+		}
+
+		#red-team-ban3 {
+			top: 3px;
+			left: 242px;
+		}
+
+		#red-team-champs-bg {
+			position: absolute;
+			width: 356px;
+			height: 687px;
+			margin-top: 175px;
+			margin-left: 1554px;
+
+			z-index: -2;
+		}
+
+		#red-team-champs-bg > div {
+			position: absolute;
+			width: 356px;
+			height: 131px;
+			margin-bottom: 10px;
+
+			z-index: -2;
+		}
+
+		#red-team-top-bg {
+			top: 0px;
+		}
+
+		#red-team-jungle-bg {
+			top: 139px;
+		}
+
+		#red-team-mid-bg {
+			top: 278px;
+		}
+
+		#red-team-adc-bg {
+			top: 417px;
+		}
+
+		#red-team-support-bg {
+			top: 556px;
+		}
+
+		#red-team-bans-bg {
+			position: absolute;
+			width: 356px;
+			height: 168px;
+			margin-top: 912px;
+			margin-left: 1554px;
+
+			z-index: -2;
+		}
+
+		#red-team-bans-bg > div {
+			position: absolute;
+			width: 116px;
+			height: 168px;
+
+			z-index: -2;
+		}
+
+		#red-team-ban1-bg {
+			left: 0px;
+		}
+
+		#red-team-ban2-bg {
+			left: 120px;
+		}
+
+		#red-team-ban3-bg {
+			left: 240px;
+		}
+
+		/** MIDDLE **/
+
+		#middle {
+			position: absolute;
+			width: 1174px;
+			height: 698px;
+			margin-top: 165px;
+			margin-left: 372px;
+
+			overflow: hidden;
+		}
+
+		#middle-bg-bg {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+
+			background-size: 1174px 698px;
+			z-index: -1
+		}
+
+		#middle-bg-fg {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+
+			background-size: 1174px 698px;
+			z-index: 1;
+		}
+
+		#casters {
+			position: absolute;
+			width: 1142px;
+			height: 48px;
+			margin-top: 70px;
+			margin-left: 16px;
+
+			border-bottom: #F8FCFD solid 2px;
+
+			font-family: spiegelcdotregular, sans-serif;
+			color: #F8FCFD;
+			font-size: 40px;
+			text-align: center;
+		}
+
+		/** BOTTOM **/
+
+		#champ-info-img-bg {
+			position: absolute;
+			width: 763px;
+			height: 206px;
+			margin-top: 873px;
+			margin-left: 783px;
+
+			z-index: -2;
+		}
+
+		#champ-info {
+			position: absolute;
+			width: 1173px;
+			height: 206px;
+			margin-top: 873px;
+			margin-left: 373px;
+
+			opacity: 0.0; /* Start hidden */
+		}
+
+		#champ-info-title {
+			position: absolute;
+			width: 450px;
+			height: 42px;
+			margin-top: 26px;
+			margin-left: 16px;
+
+			font-family: spiegelcdotsemibold, sans-serif;
+			font-size: 40px;
+			color: #F8FCFD;
+
+			border-bottom: 3px solid #F8FCFD;
+		}
+
+		#champ-info-stat-titles {
+			position: absolute;
+			height: 108px;
+			width: 115px;
+			margin-top: 73px;
+			margin-left: 16px;
+
+			font-family: spiegelcdotregular, sans-serif;
+			font-size: 30px;
+			color: #F8FCFD;
+
+			text-align: right;
+		}
+
+		#champ-info-data {
+			position: absolute;
+			width: 300px;
+			height: 104px;
+			margin-top: 73px;
+			margin-left: 140px;
+
+			font-family: spiegelcdotregular, sans-serif;
+			font-size: 30px;
+			color: #F8FCFD;
+
+			white-space: pre-line;
+		}
+
+		/** POLL **/
+		#poll {
+			position: absolute;
+			width: 1173px;
+			height: 206px;
+			margin-top: 873px;
+			margin-left: 373px;
+
+			opacity: 0.0; /* Start hidden */
+			background-color: black;
+		}
+
+		#poll > div {
+			position: absolute;
+		}
+
+		#poll-title, #poll-url {
+			width: 571px;
+			height: 42px;
+			margin-top: 10px;
+
+			font-family: spiegelcdotregular, sans-serif;
+			color: #F8FCFD;
+			font-size: 40px;
+		}
+
+		#poll-title {
+			margin-left: 16px;
+		}
+
+		#poll-url {
+			margin-left: 580px;
+			text-align: right;
+		}
+
+		#poll-bar {
+			width: 1144px;
+			height: 125px;
+			margin-top: 65px;
+			margin-left: 16px;
+		}
+
+		#poll-bar-blue, #poll-bar-red {
+			position: absolute;
+			height: 100%;
+			top: 0;
+		}
+
+		#poll-bar-blue {
+			left: 0;
+			width: 50%;
+			background: -webkit-linear-gradient(top, rgba(4, 64, 204, 1) 0%, rgba(5, 76, 255, 1) 50%, rgba(4, 64, 204, 1) 100%);
+		}
+
+		#poll-bar-red {
+			right: 0;
+			width: 50%;
+			background-color: #B81F1F;
+		}
+
+		#poll-blue-percent, #poll-red-percent {
+			position: absolute;
+			width: 100px;
+			height: 48px;
+			margin-top: 38px;
+
+			font-family: spiegelcdotsemibold, sans-serif;
+			color: #F8FCFD;
+			font-size: 40px;
+		}
+
+		#poll-blue-percent {
+			margin-left: 5px;
+		}
+
+		#poll-red-percent {
+			margin-left: 1037px;
+			text-align: right;
+		}
+
+	</style>
+	<template>
+		<div id="background"></div>
+		<div id="foreground"></div>
+		<div id="blue">
+			<div id="blue-team-info">
+				<div id="blue-team-score"></div>
+				<div id="blue-team-name"></div>
+				<div id="blue-team-form"></div>
+			</div>
+			<div id="blue-team-roster">
+				<div id="blue-team-top"></div>
+				<div id="blue-team-jungle"></div>
+				<div id="blue-team-mid"></div>
+				<div id="blue-team-adc"></div>
+				<div id="blue-team-support"></div>
+			</div>
+			<div id="blue-team-champs-bg">
+				<div id="blue-team-top-bg"></div>
+				<div id="blue-team-jungle-bg"></div>
+				<div id="blue-team-mid-bg"></div>
+				<div id="blue-team-adc-bg"></div>
+				<div id="blue-team-support-bg"></div>
+			</div>
+			<div id="blue-team-bans">
+				<div id="blue-team-ban1"></div>
+				<div id="blue-team-ban2"></div>
+				<div id="blue-team-ban3"></div>
+			</div>
+			<div id="blue-team-bans-bg">
+				<div id="blue-team-ban1-bg"></div>
+				<div id="blue-team-ban2-bg"></div>
+				<div id="blue-team-ban3-bg"></div>
+			</div>
+		</div>
+		<div id="champ-info-img-bg"></div>
+		<div id="champ-info">
+			<div id="champ-info-title">VESPYR 2016 SPRING SPLIT</div> <!-- hardcoded for now -->
+			<div id="champ-info-stat-titles">PICK RATE:<br>BAN RATE:<br>WIN RATE:</div>
+			<div id="champ-info-data"></div>
+		</div>
+		<div id="poll">
+			<div id="poll-title">WHO WILL WIN?</div>
+			<div id="poll-url"></div>
+			<div id="poll-bar">
+				<div id="poll-bar-blue"></div>
+				<div id="poll-bar-red"></div>
+				<div id="poll-blue-percent">0%</div>
+				<div id="poll-red-percent">0%</div>
+			</div>
+		</div>
+		<div id="red">
+			<div id="red-team-info">
+				<div id="red-team-score"></div>
+				<div id="red-team-name"></div>
+				<div id="red-team-form"></div>
+			</div>
+			<div id="red-team-roster">
+				<div id="red-team-top"></div>
+				<div id="red-team-jungle"></div>
+				<div id="red-team-mid"></div>
+				<div id="red-team-adc"></div>
+				<div id="red-team-support"></div>
+			</div>
+			<div id="red-team-champs-bg">
+				<div id="red-team-top-bg"></div>
+				<div id="red-team-jungle-bg"></div>
+				<div id="red-team-mid-bg"></div>
+				<div id="red-team-adc-bg"></div>
+				<div id="red-team-support-bg"></div>
+			</div>
+			<div id="red-team-bans">
+				<div id="red-team-ban1"></div>
+				<div id="red-team-ban2"></div>
+				<div id="red-team-ban3"></div>
+			</div>
+			<div id="red-team-bans-bg">
+				<div id="red-team-ban1-bg"></div>
+				<div id="red-team-ban2-bg"></div>
+				<div id="red-team-ban3-bg"></div>
+			</div>
+		</div>
+		<div id="middle">
+			<div id="middle-bg-bg"></div>
+			<div id="middle-bg-fg"></div>
+			<div id="casters"></div>
+		</div>
+	</template>
+
+</dom-module>
+
+<script>
+	Polymer({
+		is: "scene-champ-select",
+
+		ready: function() {
+			var replicants = window.parent.replicants;
+
+			/** VARS **/
+			var $teamInfo = {
+				"blue": {"name": $("#blue-team-name"), "score": $("#blue-team-score"), "form": $("#blue-team-form")},
+				"red": {"name": $("#red-team-name"), "score": $("#red-team-score"), "form": $("#red-team-form")}
+			};
+			var $teamRoster = {
+				"blue": {
+					"top": $("#blue-team-top"),
+					"jungle": $("#blue-team-jungle"),
+					"mid": $("#blue-team-mid"),
+					"adc": $("#blue-team-adc"),
+					"support": $("#blue-team-support")
+				},
+				"red": {
+					"top": $("#red-team-top"),
+					"jungle": $("#red-team-jungle"),
+					"mid": $("#red-team-mid"),
+					"adc": $("#red-team-adc"),
+					"support": $("#red-team-support")
+				}
+			};
+			var $teamBans = {
+				"blue": {"ban1": $("#blue-team-ban1"), "ban2": $("#blue-team-ban2"), "ban3": $("#blue-team-ban3")},
+				"red": {"ban1": $("#red-team-ban1"), "ban2": $("#red-team-ban2"), "ban3": $("#red-team-ban3")}
+			};
+			var $champInfoImg = $("#champ-info-img-bg");
+			var $teamPicks = {
+				"blue": {
+					"top": [$("#blue-team-top-bg"), ""],
+					"jungle": [$("#blue-team-jungle-bg"), ""],
+					"mid": [$("#blue-team-mid-bg"), ""],
+					"adc": [$("#blue-team-adc-bg"), ""],
+					"support": [$("#blue-team-support-bg"), ""]
+				},
+				"red": {
+					"top": [$("#red-team-top-bg"), ""],
+					"jungle": [$("#red-team-jungle-bg"), ""],
+					"mid": [$("#red-team-mid-bg"), ""],
+					"adc": [$("#red-team-adc-bg"), ""],
+					"support": [$("#red-team-support-bg"), ""]
+				}
+			};
+			var $teamBansBg = {
+				"blue": {
+					"ban1": [$("#blue-team-ban1-bg"), ""],
+					"ban2": [$("#blue-team-ban2-bg"), ""],
+					"ban3": [$("#blue-team-ban3-bg"), ""]
+				},
+				"red": {
+					"ban1": [$("#red-team-ban1-bg"), ""],
+					"ban2": [$("#red-team-ban2-bg"), ""],
+					"ban3": [$("#red-team-ban3-bg"), ""]
+				}
+			};
+
+			/** REPLICANTS **/
+
+			var $middleBG = $("#middle-bg-bg");
+			var $middleFG = $("#middle-bg-fg");
+			var currentBG = "";
+
+			/** BOTTOM CHAMP INFO **/
+			var $champInfo = $("#champ-info");
+
+			/** POLL **/
+			var $poll = $("#poll");
+			var $pollBar = {"blue": $("#poll-bar-blue"), "red": $("#poll-bar-red")};
+			var $pollValues = {"blue": $("#poll-blue-percent"), "red": $("#poll-red-percent")};
+			var currTotal = 0;
+
+			/** BOTTOM **/
+			nodecg.listenFor("champ-picked", function (value) {
+				$champInfo.queue(function (next) {
+					var changeStats = new TimelineLite();
+					changeStats
+							.to($champInfo, 0.5, {
+								opacity: 0.0
+							})
+							.call(function () {
+								$("#champ-info-data").text(value["info"]["pickrate"] + "\n" + value["info"]["banrate"] + "\n" + value["info"]["winrate"]);
+							})
+							.to($champInfo, 0.5, {
+								opacity: 1.0
+							});
+					setTimeout(function () {
+						next();
+					}, 15000);
+				});
+				$champInfoImg.queue(function (next) {
+					var changeInfoImg = new TimelineLite();
+					changeInfoImg
+							.to($champInfoImg, 0.5, {
+								opacity: 0.0
+							})
+							.call(function () {
+								$champInfoImg.css("background-image", "url(images/champ-select/info/" + value["file"] + ".jpg)");
+							})
+							.to($champInfoImg, 0.5, {
+								opacity: 1.0
+							});
+					setTimeout(function () {
+						next();
+					}, 15000);
+				});
+			});
+			nodecg.listenFor("champ-picked-clear", function () {
+				$champInfoImg.clearQueue().css("background-image", "none");
+				$champInfo.clearQueue().css("opacity", 0.0);
+			});
+		}
+	});
+</script>

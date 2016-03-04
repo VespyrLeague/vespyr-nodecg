@@ -1,0 +1,452 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<dom-module id="scene-coming-up">
+	<style>
+		#background-img {
+			position: absolute;
+			margin-top: 0px;
+			margin-left: 0px;
+			width: 1920px;
+			height: 1080px;
+		}
+
+		#foreground-img {
+			position: absolute;
+			margin-top: 0px;
+			margin-left: 0px;
+			width: 1920px;
+			height: 1080px;
+
+			background-image: url("../images/coming-up/foreground.png");
+		}
+
+		#title {
+			position: absolute;
+			margin-top: 33px;
+			margin-left: 0px;
+			width: 1920px;
+			height: 88px;
+
+			font-size: 92px;
+			font-family: octin_sportsregular, sans-serif;
+			color: #F8FCFD;
+			text-align: center;
+
+			z-index: 10;
+		}
+		#timer {
+			position: absolute;
+			margin-top: 944px;
+			margin-left: 737px;
+			width: 444px;
+			height: 88px;
+
+			font-size: 82px;
+			font-family: monospace;
+			color: #F8FCFD;
+			text-align: center;
+
+			z-index: 10;
+		}
+
+		/** MATCH CLASSES **/
+		.vs {
+			float: left;
+			position: relative;
+			top: 31px;
+			margin-left: 71px;
+			width: 62px;
+			height: 68px;
+
+			font-size: 60px;
+			font-family: spiegelcdotsemibold, sans-serif;
+			color: #F8FCFD;
+			text-align: center;
+
+			z-index: 10;
+		}
+		.team-1, .team-2 {
+			float: left;
+			position: relative;
+			top: 28px;
+			width: 675px;
+			height: 71px;
+
+			font-size: 72px;
+			font-family: spiegelcdotregular, sans-serif;
+			color: #F8FCFD;
+
+			z-index: 10;
+		}
+		.team-1 {
+			margin-left: 0px;
+			text-align: right;
+		}
+		.team-2 {
+			margin-left: 64px;
+			text-align: left;
+		}
+
+		#inner {
+			position: absolute;
+			margin-top: 165px;
+			margin-left: 0px;
+			width: 1920px;
+			height: 729px;
+		}
+		.game {
+			position: relative;
+			margin-left: 187px;
+			width: 1547px;
+			height: 129px;
+
+			background-image: url("../images/coming-up/match-bar.png");
+
+			border: solid #F8FCFD;
+			border-width: 2px 0;
+		}
+		.info {
+			position: relative;
+			margin-left: 220px;
+			width: 1482px;
+			height: 339px;
+
+			background-image: url("../images/coming-up/team-info.png");
+		}
+		#game-2-info {
+			display: none;
+		}
+		#game-3-info {
+			display: none;
+		}
+
+		/** INFO **/
+		.team1-info, .team-2-info {
+			position: absolute;
+			margin-top: 0px;
+			width: 637px;
+			height: 339px;
+		}
+		.team-1-info {
+			margin-left: 0px;
+		}
+		.team-2-info {
+			left: 846px;
+		}
+		.position, .form {
+			position: absolute;
+			top: 26px;
+			width: 270px;
+			height: 40px;
+
+			font-family: spiegelcdotsemibold, sans-serif;
+			font-size: 38px;
+			color: #F8FCFD;
+
+			z-index: 10;
+		}
+		.position {
+			margin-left: 15px;
+		}
+		.form {
+			margin-left: 350px;
+
+			text-align: right;
+		}
+
+
+		.roster {
+			position: absolute;
+			margin-top: 79px;
+			margin-left: 175px;
+			width: 454px;
+			height: 240px;
+		}
+		.roster > div {
+			float: left;
+			position: relative;
+			margin-top: 9px;
+			left: 0px;
+			width: 454px;
+			height: 40px;
+
+			font-family: spiegelcdotregular, sans-serif;
+			font-size: 38px;
+			color: #F8FCFD;
+
+			z-index: 10;
+		}
+		.top {
+			margin-top: 0px;
+		}
+	</style>
+	<template>
+		<div id="background-img"></div>
+		<div id="title">COMING UP</div>
+		<div id="timer">00:00:00</div>
+		<div id="inner">
+			<div id="game-1" class="game" style="margin-top: -1px;">
+				<div class="team-1" id="game1-blue-name"></div>
+				<div class="vs">vs</div>
+				<div class="team-2" id="game1-red-name"></div>
+			</div>
+			<div id="game-1-info" class="info">
+				<div class="team-1-info">
+					<div class="position" id="game1-blue-position"></div>
+					<div class="form" id="game1-blue-form"></div>
+					<div class="roster">
+						<div class="top" id="game1-blue-top"></div>
+						<div class="jungle" id="game1-blue-jungle"></div>
+						<div class="mid" id="game1-blue-mid"></div>
+						<div class="adc" id="game1-blue-adc"></div>
+						<div class="support" id="game1-blue-support"></div>
+					</div>
+				</div>
+				<div class="team-2-info">
+					<div class="position" id="game1-red-position"></div>
+					<div class="form" id="game1-red-form"></div>
+					<div class="roster">
+						<div class="top" id="game1-red-top"></div>
+						<div class="jungle" id="game1-red-jungle"></div>
+						<div class="mid" id="game1-red-mid"></div>
+						<div class="adc" id="game1-red-adc"></div>
+						<div class="support" id="game1-red-support"></div>
+					</div>
+				</div>
+			</div>
+			<div id="game-2" class="game">
+				<div class="team-1" id="game2-blue-name"></div>
+				<div class="vs">vs</div>
+				<div class="team-2" id="game2-red-name"></div>
+			</div>
+			<div id="game-2-info" class="info">
+				<div class="team-1-info">
+					<div class="position" id="game2-blue-position"></div>
+					<div class="form" id="game2-blue-form"></div>
+					<div class="roster">
+						<div class="top" id="game2-blue-top"></div>
+						<div class="jungle" id="game2-blue-jungle"></div>
+						<div class="mid" id="game2-blue-mid"></div>
+						<div class="adc" id="game2-blue-adc"></div>
+						<div class="support" id="game2-blue-support"></div>
+					</div>
+				</div>
+				<div class="team-2-info">
+					<div class="position" id="game2-red-position"></div>
+					<div class="form" id="game2-red-form"></div>
+					<div class="roster">
+						<div class="top" id="game2-red-top"></div>
+						<div class="jungle" id="game2-red-jungle"></div>
+						<div class="mid" id="game2-red-mid"></div>
+						<div class="adc" id="game2-red-adc"></div>
+						<div class="support" id="game2-red-support"></div>
+					</div>
+				</div>
+			</div>
+			<div id="game-3" class="game">
+				<div class="team-1" id="game3-blue-name"></div>
+				<div class="vs">vs</div>
+				<div class="team-2" id="game3-red-name"></div>
+			</div>
+			<div id="game-3-info" class="info">
+				<div class="team-1-info">
+					<div class="position" id="game3-blue-position"></div>
+					<div class="form" id="game3-blue-form"></div>
+					<div class="roster">
+						<div class="top" id="game3-blue-top"></div>
+						<div class="jungle" id="game3-blue-jungle"></div>
+						<div class="mid" id="game3-blue-mid"></div>
+						<div class="adc" id="game3-blue-adc"></div>
+						<div class="support" id="game3-blue-support"></div>
+					</div>
+				</div>
+				<div class="team-2-info">
+					<div class="position" id="game3-red-position"></div>
+					<div class="form" id="game3-red-form"></div>
+					<div class="roster">
+						<div class="top" id="game3-red-top"></div>
+						<div class="jungle" id="game3-red-jungle"></div>
+						<div class="mid" id="game3-red-mid"></div>
+						<div class="adc" id="game3-red-adc"></div>
+						<div class="support" id="game3-red-support"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="foreground-img"></div>
+	</template>
+
+</dom-module>
+
+
+<script>
+	Polymer({
+		is: "scene-coming-up",
+
+		ready: function () {
+			var $comingUpInfo = {
+				"game1": {
+					"blue": {
+						"info": {
+							"name": $("#game1-blue-name"),
+							"tag": $("#game1-blue-tag"),
+							"score": $("#game1-blue-score"),
+							"position": $("#game1-blue-position"),
+							"form": $("#game1-blue-form")
+						},
+						"roster": {
+							"top": $("#game1-blue-top"),
+							"jungle": $("#game1-blue-jungle"),
+							"mid": $("#game1-blue-mid"),
+							"adc": $("#game1-blue-adc"),
+							"support": $("#game1-blue-support")
+						}
+					},
+					"red": {
+						"info": {
+							"name": $("#game1-red-name"),
+							"tag": $("#game1-red-tag"),
+							"score": $("#game1-red-score"),
+							"position": $("#game1-red-position"),
+							"form": $("#game1-red-form")
+						},
+						"roster": {
+							"top": $("#game1-red-top"),
+							"jungle": $("#game1-red-jungle"),
+							"mid": $("#game1-red-mid"),
+							"adc": $("#game1-red-adc"),
+							"support": $("#game1-red-support")
+						}
+					}
+				},
+				"game2": {
+					"blue": {
+						"info": {
+							"name": $("#game2-blue-name"),
+							"tag": $("#game2-blue-tag"),
+							"score": $("#game2-blue-score"),
+							"position": $("#game2-blue-position"),
+							"form": $("#game2-blue-form")
+						},
+						"roster": {
+							"top": $("#game2-blue-top"),
+							"jungle": $("#game2-blue-jungle"),
+							"mid": $("#game2-blue-mid"),
+							"adc": $("#game2-blue-adc"),
+							"support": $("#game2-blue-support")
+						}
+					},
+					"red": {
+						"info": {
+							"name": $("#game2-red-name"),
+							"tag": $("#game2-red-tag"),
+							"score": $("#game2-red-score"),
+							"position": $("#game2-red-position"),
+							"form": $("#game2-red-form")
+						},
+						"roster": {
+							"top": $("#game2-red-top"),
+							"jungle": $("#game2-red-jungle"),
+							"mid": $("#game2-red-mid"),
+							"adc": $("#game2-red-adc"),
+							"support": $("#game2-red-support")
+						}
+					}
+				},
+				"game3": {
+					"blue": {
+						"info": {
+							"name": $("#game3-blue-name"),
+							"tag": $("#game3-blue-tag"),
+							"score": $("#game3-blue-score"),
+							"position": $("#game3-blue-position"),
+							"form": $("#game3-blue-form")
+						},
+						"roster": {
+							"top": $("#game3-blue-top"),
+							"jungle": $("#game3-blue-jungle"),
+							"mid": $("#game3-blue-mid"),
+							"adc": $("#game3-blue-adc"),
+							"support": $("#game3-blue-support")
+						}
+					},
+					"red": {
+						"info": {
+							"name": $("#game3-red-name"),
+							"tag": $("#game3-red-tag"),
+							"score": $("#game3-red-score"),
+							"position": $("#game3-red-position"),
+							"form": $("#game3-red-form")
+						},
+						"roster": {
+							"top": $("#game3-red-top"),
+							"jungle": $("#game3-red-jungle"),
+							"mid": $("#game3-red-mid"),
+							"adc": $("#game3-red-adc"),
+							"support": $("#game3-red-support")
+						}
+					}
+				}
+			};
+
+			var $comingUpPanels = {
+				"game1": $("#game-1-info"),
+				"game2": $("#game-2-info"),
+				"game3": $("#game-3-info")
+			};
+
+			var $backgroundImg = $("#background-img");
+			var $foregroundImg = $("#foreground-img");
+			var currentBG = "";
+			var currentTimer = "";
+
+			var comingUpReplicant = nodecg.Replicant("coming-up")
+					.on("change", function(oldVal, newVal) { // On change...
+						if (currentBG != newVal["colour"]) {
+							if (newVal["colour"] == "inhouse") { // If we're doing inhouses.
+								$foregroundImg.css("background-image",  "url(" + preload.getResult("inhouse-bg").src + ")").css("z-index", "100");
+							} else {
+								$backgroundImg.css("background-image", "url(" + preload.getResult(newVal["colour"] + "-bg").src + ")");
+								$foregroundImg.css("background-image",  'url("images/coming-up/foreground.png")').css("z-index", "0");
+							}
+							currentBG = newVal["colour"];
+						}
+						if (!$comingUpPanels[newVal["next_game"]].is(":visible")) { // If the next game has changed...
+							$(".info:visible").slideUp(); // Slide the currently visible game up.
+							$comingUpPanels[newVal["next_game"]].slideDown(); // Slide the new game down.
+						}
+
+						if (currentTimer != newVal["timer"]) {
+							var time = new Date();
+							var timeString = newVal["timer"].split(":");
+							time.setHours(timeString[0], timeString[1] - time.getTimezoneOffset() - 60, timeString[2]);
+							function pad (str, max) {
+								str = str.toString();
+								return str.length < max ? pad("0" + str, max) : str;
+							}
+							var countdown = (time.getFullYear() + "/" + pad(time.getMonth() + 1, 2) + "/" + pad(time.getDate(), 2) +
+							" " + pad(time.getHours(), 2) + ":" + pad(time.getMinutes(), 2) + ":" + pad(time.getSeconds(), 2));
+
+							$("#timer").countdown(countdown, function(e) {
+								$(this).text(e.strftime("%H:%M:%S"))
+							});
+							currentTimer = newVal["timer"];
+						}
+					});
+
+			var teamsReplicant = nodecg.Replicant("team-data")
+					.on("change", function(oldVal, newVal) { // On change...
+						$.each(newVal, function(game, value) { // For each game...
+							$.each(value, function(team, value) { // For each team...
+								$.each(value["info"], function(key, value) { // For each team info...
+									$comingUpInfo[game][team]["info"][key].text(value);
+								});
+								$.each(value["roster"], function(position, value) { // For each player in the roster...
+									$comingUpInfo[game][team]["roster"][position].text(value);
+								});
+							});
+						});
+					});
+		}
+	});
+</script>

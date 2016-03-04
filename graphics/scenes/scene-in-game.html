@@ -1,0 +1,241 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<dom-module id="scene-in-game">
+	<style>
+		#background {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 1920px;
+			height: 1080px;
+
+			background-image: url("../images/in-game/in-game.png");
+		}
+
+		/** SCORE **/
+		#score {
+			position: absolute;
+			margin-top: 64px;
+			margin-left: 567px;
+			height: 54px;
+			width: 785px;
+
+			overflow: hidden;
+		}
+		#blue-score, #red-score {
+			position: absolute;
+			width: 317px;
+			height: 54px;
+
+			overflow: hidden;
+		}
+		#blue-score-text, #red-score-text {
+			margin-top: 10px;
+
+			font-family: spiegelcdotregular, sans-serif;
+			color: #F8FCFD;
+			font-size: 36px;
+			text-align: center;
+		}
+		#blue-score {
+
+			background-image: url("../images/in-game/blue-score.png")
+		}
+		#red-score {
+			margin-left: 468px;
+
+			background-image: url("../images/in-game/red-score.png");
+		}
+
+		/** SCOREBOARD **/
+		#bottom-left {
+			position: absolute;
+			margin-top: 866px;
+			margin-left: 0px;
+			width: 387px;
+			height: 214px;
+
+			background-image: url("../images/in-game/bottom-left.png");
+		}
+		#bottom-left-images {
+			position: absolute;
+			margin-top: 102px;
+			margin-left: 7px;
+			width: 294px;
+			height: 106px;
+		}
+		#bottom-left-images img {
+			position: absolute;
+			display: none;
+		}
+		#bottom-left-images img.active {display: block; }
+
+
+		#bottom-center {
+			position: absolute;
+			margin-top: 816px;
+			margin-left: 526px;
+			width: 878px;
+			height: 264px;
+
+			background-image: url("../images/in-game/bottom-center.png");
+
+			z-index: -1;
+		}
+
+		#bottom-center > div {
+			position: absolute;
+
+			font-family: spiegelcdotsemibold, sans-serif;
+			color: #F8FCFD;
+			text-align: center;
+		}
+		#bottom-center-left-text-upper {
+			margin-top: 20px;
+			margin-left: 50px;
+			width: 349px;
+			height: 32px;
+
+			font-size: 30px;
+		}
+		#bottom-center-left-text-lower {
+			margin-top: 50px;
+			margin-left: 50px;
+			width: 349px;
+			height: 32px;
+
+			font-size: 30px;
+		}
+		#bottom-center-right-text {
+			margin-top: 22px;
+			margin-left: 475px;
+			width: 349px;
+			height: 51px;
+
+			font-size: 50px;
+		}
+	</style>
+	<template>
+		<div id="background"></div>
+		<div id="score">
+			<div id="blue-score">
+				<div id="blue-score-text"></div>
+			</div>
+			<div id="red-score">
+				<div id="red-score-text"></div>
+			</div>
+		</div>
+		<div id="bottom-left">
+			<div id="bottom-left-images">
+				<img class="active" src="../images/in-game/bottom-left-1.png" />
+				<img src="../images/in-game/bottom-left-2.png" />
+				<img src="../images/in-game/bottom-left-3.png" />
+				<img src="../images/in-game/bottom-left-4.png" />
+				<img src="../images/in-game/bottom-left-5.png" />
+			</div>
+		</div>
+		<div id="bottom-center">
+			<div id="bottom-center-left-text-upper"></div>
+			<div id="bottom-center-left-text-lower"></div>
+			<div id="bottom-center-right-text"></div>
+		</div>
+	</template>
+
+</dom-module>
+
+<script>
+	Polymer({
+		is: "scene-in-game",
+
+		ready: function () {
+			var $score = {"blue": [$("#blue-score"), $("#blue-score-text")], "red": [$("#red-score"), $("#red-score-text")]};
+			var $inGameTexts = {
+				"left": {
+					"top": $("#bottom-center-left-text-upper"),
+					"bottom": $("#bottom-center-left-text-lower")
+				}, "right": $("#bottom-center-right-text")
+			};
+
+			var game = "";
+			var updateScore = function () {
+				if (typeof comingUpReplicant == "undefined" || game == "") { return }
+				var blueScore = teamReplicant.value[comingUpReplicant.value["next_game"]]["blue"]["info"]["score"] + " - " + teamReplicant.value[comingUpReplicant.value["next_game"]]["blue"]["info"]["tag"];
+				var redScore = teamReplicant.value[comingUpReplicant.value["next_game"]]["red"]["info"]["tag"] + " - " + teamReplicant.value[comingUpReplicant.value["next_game"]]["red"]["info"]["score"];
+				var updateScore = function (team, newScore) {
+					var scoreTimeline = new TimelineLite();
+					scoreTimeline
+							.to($score[team][0], 0.5, {
+								top: "-110%"
+							})
+							.call(function () {
+								$score[team][1].text(newScore)
+							})
+							.to($score[team][0], 0.5, {
+								top: "0%"
+							});
+				};
+				if ($score["blue"][1].text() != blueScore) {
+					updateScore("blue", blueScore)
+				}
+				if ($score["red"][1].text() != redScore) {
+					updateScore("red", redScore)
+				}
+			};
+
+			var teamReplicant = nodecg.Replicant("team-data")
+					.on("change", function (oldVal, newVal) { // On change...
+						updateScore()
+					});
+
+			var comingUpReplicant = nodecg.Replicant("coming-up")
+					.on("change", function (oldVal, newVal) { // On change...
+						game = newVal["next_game"];
+						updateScore()
+					});
+
+			var inGameReplicant = nodecg.Replicant("in-game")
+					.on("change", function (oldVal, newVal) {
+						$inGameTexts["left"]["top"].text(newVal["left"]["top"]);
+						$inGameTexts["left"]["bottom"].text(newVal["left"]["bottom"]);
+						$inGameTexts["right"].text(newVal["right"]);
+					});
+
+			var $scoreBoard = $("#score");
+			var $bottomLeft = $("#bottom-left");
+			var $bottomCenter = $("#bottom-center");
+
+			nodecg.listenFor("lolEvent", function (key) {
+				if (key == "A") { // If teamfight.
+					($scoreBoard.is(":visible")) ? $scoreBoard.hide() : $scoreBoard.show(); // Toggle score.
+					($bottomLeft.is(":visible")) ? $bottomLeft.hide() : $bottomLeft.show(); // Toggle info box.
+					($bottomCenter.is(":visible")) ? $bottomCenter.hide() : $bottomCenter.show(); // Toggle text bar.
+				}
+			});
+
+			function cycleImages() {
+				var $current = $("#bottom-left-images .active");
+				var $next = ($current.next().length > 0) ? $current.next() : $("#bottom-left-images img:first");
+				$current.fadeOut(1000, function () {
+					$current.removeClass("active"); // Reset z-index and unhide.
+					$next.fadeIn(1000, function () {
+						$next.addClass("active"); // Show next image
+					});
+				})
+			}
+
+			setInterval(function() { cycleImages() }, 8000);
+		},
+
+		detached: function() {
+			// This is really, really bad. Please don't copy this.
+			var handlers = nodecg._messageHandlers;
+			for (var i = handlers.length - 1; i >= 0; i--) {
+				if (["lolEvent"].indexOf(handlers[i]["messageName"]) >= 0 &&
+						handlers[i]["bundleName"] == "vespyr") {
+					handlers.splice(i, 1)
+				}
+			}
+			nodecg._messageHandlers = handlers;
+		}
+	});
+</script>
